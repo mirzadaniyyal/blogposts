@@ -1,28 +1,6 @@
-name: CI/CD Pipeline
+name: Dockerized PHP MySQL CI/CD
 
 on:
   push:
     branches:
       - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-      
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.0'
-    
-    - name: Run Tests
-      run: phpunit
-
-    - name: Build Docker Image
-      run: |
-        docker build -t your-image-name .
-        docker tag your-image-name your-docker-registry/your-image-name
-        docker push your-docker-registry/your-image-name
