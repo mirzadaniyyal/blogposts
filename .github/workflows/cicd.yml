@@ -1,12 +1,12 @@
-name: Dockerized PHP MySQL CI/CD
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - main
+      - staging
 
 jobs:
-  build-and-push:
+  deploy:
     runs-on: ubuntu-latest
     
     steps:
@@ -22,13 +22,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Add PHPUnit Tests
-      - name: PHPUnit Tests Chalayein
-        run: phpunit tests/
-
-      - name: Build Docker Image
+      - name: Deploy to Server
         run: |
-          docker build -t daniyalmirza/blogpost:V1 .
-          docker push daniyalmirza/blogpost:V1
-
-     
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_PATH }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_ADDRESS }} 'docker pull ${{ secrets.DOCKER_USERNAME }}/blogpost:V1'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_PATH }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_ADDRESS }} 'docker run -d -p 8080:80 ${{ secrets.DOCKER_USERNAME }}/blogpost:V1'
