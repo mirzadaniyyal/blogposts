@@ -22,5 +22,5 @@ RUN curl -sS https://phar.phpunit.de/phpunit.phar -o phpunit \
     && chmod +x phpunit \
     && mv phpunit /usr/local/bin/phpunit
 
-# Run PHPUnit tests
-RUN phpunit tests/
+# Run tests
+CMD ["phpunit", "tests/"]
