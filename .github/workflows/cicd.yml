@@ -54,6 +54,16 @@ jobs:
         run: |
           docker push daniyalmirza/blogpost-mysql:staging
 
+      - name: Stop and remove Docker containers
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_ADDRESS }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker stop mysql blog || true
+            docker rm mysql blog || true
+
       - name: Set up SSH and Docker
         uses: appleboy/ssh-action@master
         with:
@@ -68,6 +78,7 @@ jobs:
             docker pull daniyalmirza/blogpost-php:staging
             docker pull daniyalmirza/blogpost-mysql:staging
             # Run the Docker container
-            docker run -d --name my-php-container -p 8080:80 daniyalmirza/blogpost-php:staging
-            docker run -d --name my-mysql-container daniyalmirza/blogpost-mysql:staging
+            docker run --name mysql -d daniyalmirza/blogpost-mysql:staging
+            docker run --name blog -p 80:80 --link mysql:mysql -d daniyalmirza/blogpost-php:staging
+
 
