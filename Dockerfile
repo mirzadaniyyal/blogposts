@@ -1,29 +1,11 @@
-# Dockerfile
-
 # Use the official PHP image
-FROM php:7.4
-
-# Install required PHP extensions
-RUN docker-php-ext-install pdo_mysql
+FROM php:7.4-apache
 
 # Set working directory
 WORKDIR .
 
-# Copy PHP application files to container
+# Copy your PHP application files to the container
 COPY . .
-
-# Install any other required dependencies
-RUN apt-get update && apt-get install -y \
-    # Install any other dependencies you need for testing
-    && rm -rf /var/lib/apt/lists/*
-
-# Install PHPUnit
-RUN curl -sS https://phar.phpunit.de/phpunit.phar -o phpunit \
-    && chmod +x phpunit \
-    && mv phpunit /usr/local/bin/phpunit
-
-# Run tests
-CMD ["phpunit", "tests/"]
 
 # Install PDO MySQL extension
 RUN docker-php-ext-install pdo_mysql
@@ -32,7 +14,21 @@ RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mysqli
 
 # Enable Apache rewrite module
-#RUN a2enmod rewrite
+RUN a2enmod rewrite
 
 # Expose port 80
 EXPOSE 80
+
+# Use the official MySQL image
+FROM mysql:5.7
+
+# Set environment variables
+ENV MYSQL_ROOT_PASSWORD=sawwd493
+ENV MYSQL_DATABASE=blog_db
+ENV MYSQL_PASSWORD=sawwd493
+
+# Copy MySQL initialization script
+COPY init.sql /docker-entrypoint-initdb.d/
+
+# Expose port 3306 to connect to MySQL server
+EXPOSE 3306
