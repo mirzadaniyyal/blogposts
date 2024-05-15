@@ -12,6 +12,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: PHP Code Ka Linking Aur Testing
+        run: |
+           docker build -t my-php-app .
+           docker run --rm my-php-app
+
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
