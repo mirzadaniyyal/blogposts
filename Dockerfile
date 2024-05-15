@@ -1,3 +1,5 @@
+# Dockerfile
+
 # Use the official PHP image
 FROM php:7.4
 
@@ -15,8 +17,8 @@ RUN apt-get update && apt-get install -y \
     # Install any other dependencies you need for testing
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHPUnit (example)
-RUN wget -q -O phpunit https://phar.phpunit.de/phpunit.phar \
+# Install PHPUnit
+RUN curl -sS https://phar.phpunit.de/phpunit.phar -o phpunit \
     && chmod +x phpunit \
     && mv phpunit /usr/local/bin/phpunit
 
