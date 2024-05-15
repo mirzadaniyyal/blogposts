@@ -45,5 +45,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull blogpost:V1
+            docker pull blogpost:staging
             docker run -d -p 8080:80 blogpost:staging
