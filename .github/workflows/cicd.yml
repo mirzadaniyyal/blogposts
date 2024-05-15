@@ -65,8 +65,9 @@ jobs:
             docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
       
             # Pull the Docker image
-            docker pull daniyalmirza/blogpost:staging
-      
+            docker pull daniyalmirza/blogpost-php:staging
+            docker pull daniyalmirza/blogpost-mysql:staging
             # Run the Docker container
-            docker run -d -p 80:80 -p 3306:3306 --name my-app daniyalmirza/blogpost:staging
+            docker run -d --name my-php-container -p 8080:80 daniyalmirza/blogpost-php:staging
+            docker run -d --name my-mysql-container daniyalmirza/blogpost-mysql:staging
 
