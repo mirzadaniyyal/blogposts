@@ -1,7 +1,7 @@
 # Dockerfile
 
 # Use the official PHP image
-FROM php:7.4-apache
+FROM php:7.4
 
 # Install required PHP extensions
 RUN docker-php-ext-install pdo_mysql
@@ -32,7 +32,7 @@ RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mysqli
 
 # Enable Apache rewrite module
-RUN a2enmod rewrite
+#RUN a2enmod rewrite
 
 # Expose port 80
 EXPOSE 80
