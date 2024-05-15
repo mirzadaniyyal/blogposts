@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-           docker build -t daniyalmirza/blogpost:tagname .
-           docker push daniyalmirza/blogpost:tagname
+           docker build -t daniyalmirza/blogpost:V1 .
+           docker push daniyalmirza/blogpost:V1
 
      
