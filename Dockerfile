@@ -7,7 +7,7 @@ FROM php:7.4
 RUN docker-php-ext-install pdo_mysql
 
 # Set working directory
-WORKDIR /var/www/html/blog
+WORKDIR .
 
 # Copy PHP application files to container
 COPY . .
@@ -24,3 +24,15 @@ RUN curl -sS https://phar.phpunit.de/phpunit.phar -o phpunit \
 
 # Run tests
 CMD ["phpunit", "tests/"]
+
+# Install PDO MySQL extension
+RUN docker-php-ext-install pdo_mysql
+
+# Install MySQLi extension
+RUN docker-php-ext-install mysqli
+
+# Enable Apache rewrite module
+RUN a2enmod rewrite
+
+# Expose port 80
+EXPOSE 80
