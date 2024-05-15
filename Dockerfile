@@ -1,7 +1,7 @@
 # Dockerfile
 
 # Use the official PHP image
-FROM php:7.4
+FROM php:7.4-apache
 
 # Install required PHP extensions
 RUN docker-php-ext-install pdo_mysql
